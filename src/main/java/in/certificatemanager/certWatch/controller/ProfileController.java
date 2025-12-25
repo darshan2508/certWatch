@@ -3,6 +3,7 @@ package in.certificatemanager.certWatch.controller;
 import in.certificatemanager.certWatch.dto.AuthDTO;
 import in.certificatemanager.certWatch.dto.ProfileDTO;
 import in.certificatemanager.certWatch.service.ProfileService;
+import in.certificatemanager.certWatch.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class ProfileController {
 
     private final ProfileService profileService;
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/register")
     public ResponseEntity<ProfileDTO> registerProfile(@RequestBody ProfileDTO profileDTO){
@@ -26,7 +28,7 @@ public class ProfileController {
     public ResponseEntity<String> activateProfile(@RequestParam String token){
         boolean isActivated = profileService.activateProfile(token);
         if(isActivated){
-            return ResponseEntity.ok("Profile activates successfully.");
+            return ResponseEntity.ok("Profile activated successfully.");
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Activation token not found or already used");
         }
@@ -50,5 +52,20 @@ public class ProfileController {
         }
     }
 
+    @GetMapping("/authCheck")
+    public ResponseEntity<String> checkAuthStatus(@RequestParam String token){
+        if(jwtUtil.validateJwtToken(token)){
+            return ResponseEntity.ok("User is logged in.");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Auth is not in-place.");
+        }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDTO> getPublicProfile(){
+        ProfileDTO profile =  profileService.getPublicProfile(null);
+        return ResponseEntity.ok(profile);
+    }
 
 }
