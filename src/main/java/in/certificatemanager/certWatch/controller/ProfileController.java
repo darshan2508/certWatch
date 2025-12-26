@@ -28,7 +28,7 @@ public class ProfileController {
     public ResponseEntity<String> activateProfile(@RequestParam String token){
         boolean isActivated = profileService.activateProfile(token);
         if(isActivated){
-            return ResponseEntity.ok("Profile activated successfully.");
+            return ResponseEntity.ok("Profile activated successfully. You may close this tab.");
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Activation token not found or already used");
         }
