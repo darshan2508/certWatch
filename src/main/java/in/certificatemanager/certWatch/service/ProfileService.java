@@ -49,7 +49,6 @@ public class ProfileService {
                 .fullName(profileDTO.getFullName())
                 .email(profileDTO.getEmail())
                 .password(passwordEncoder.encode(profileDTO.getPassword()))
-                .profileImageUrl(profileDTO.getProfileImageUrl())
                 .createdAt(profileDTO.getCreatedAt())
                 .updatedAt(profileDTO.getUpdatedAt())
                 .build();
@@ -60,7 +59,6 @@ public class ProfileService {
                 .id(profileEntity.getId())
                 .fullName(profileEntity.getFullName())
                 .email(profileEntity.getEmail())
-                .profileImageUrl(profileEntity.getProfileImageUrl())
                 .createdAt(profileEntity.getCreatedAt())
                 .updatedAt(profileEntity.getUpdatedAt())
                 .build();
@@ -101,7 +99,6 @@ public class ProfileService {
                 .id(currentUser.getId())
                 .fullName(currentUser.getFullName())
                 .email(currentUser.getEmail())
-                .profileImageUrl(currentUser.getProfileImageUrl())
                 .createdAt(currentUser.getCreatedAt())
                 .updatedAt(currentUser.getUpdatedAt())
                 .build();
